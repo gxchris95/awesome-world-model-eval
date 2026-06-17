@@ -2,11 +2,9 @@
 
 > A curated list of **benchmarks and metrics for evaluating world models** — across language, video, 3D/4D, driving, and embodied settings.
 
-![Papers](https://img.shields.io/badge/papers-59-blue) ![Updated](https://img.shields.io/badge/updated-2026--06-green) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing) ![License](https://img.shields.io/badge/license-CC0-lightgrey)
+![Papers](https://img.shields.io/badge/papers-63-blue) ![Updated](https://img.shields.io/badge/updated-2026--06-green) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing) ![License](https://img.shields.io/badge/license-CC0-lightgrey)
 
 World models learn to *simulate* an environment and predict how it changes under actions. As they scale, the hard question shifts from *"can it generate a plausible-looking future?"* to *"is that future physically correct, geometrically consistent, controllable, and useful for a task?"* This list collects the benchmarks and metrics that try to answer it.
-
-Every entry was checked against its source paper; arXiv IDs encode the month (`25xx` = 2025, `26xx` = 2026). **🆕 marks 2026 papers.**
 
 ---
 
@@ -24,6 +22,8 @@ Every entry was checked against its source paper; arXiv IDs encode the month (`2
   - [Physics-Centric](#physics-centric)
   - [Other / Workshop](#other--workshop)
 - [Metric Reference Tables](#metric-reference-tables)
+  - [Common metrics](#common-metrics)
+- [Evolution of Evaluation (diagrams)](EVOLUTION.md)
 - [Contributing](#contributing)
 
 ---
@@ -54,37 +54,39 @@ Scoring comes in three flavors that strong benchmarks **validate against humans*
 
 ## 🆕 2026 Papers at a Glance
 
-| Paper | Date | Modality | Evaluation idea |
-|---|---|---|---|
-| [Wow, wo, val!](https://arxiv.org/abs/2601.04137) | Jan 2026 | Embodied | 22 metrics + real-robot IDM "Turing test"; human corr. >0.93 |
-| [A Mechanistic View on Video Generation as World Models](https://arxiv.org/abs/2601.17067) | Jan 2026 | Video | Survey: State Construction vs. Dynamics; catalogs 17 metrics |
-| [MIND](https://arxiv.org/abs/2602.08025) | Feb 2026 | Video | Memory consistency + action control, closed-loop, 1080p/24fps |
-| [WorldArena](https://arxiv.org/abs/2602.08971) | Feb 2026 | Embodied | 16 perception + 3 functional metrics; EWMScore |
-| [The Trinity of Consistency (CoW-Bench)](https://arxiv.org/abs/2602.23152) | Feb 2026 | Video | Modal × Spatial × Temporal consistency |
-| [Omni-WorldBench](https://arxiv.org/abs/2603.22212) | Mar 2026 | Video/4D | Interaction-centric; agentic VLM scoring |
-| [Out of Sight, Out of Mind? (STEVO-Bench)](https://arxiv.org/abs/2603.13215) | Mar 2026 | Video | State evolution under occlusion / camera-lookaway |
-| [World Reasoning Arena](https://arxiv.org/abs/2603.25887) | Mar 2026 | Multimodal | Action fidelity + long-horizon + simulative reasoning |
-| [RoboWM-Bench](https://arxiv.org/abs/2604.19092) | Apr 2026 | Embodied | Video → executable actions, validated in simulation |
-| [WorldMark](https://arxiv.org/abs/2604.21686) | Apr 2026 | Interactive video | Unified action-mapping across 6 interactive models |
-| [Geometric-Consistency (PDI-Bench)](https://arxiv.org/abs/2605.15185) | May 2026 | Video | Projective-geometry residuals |
-| [PhyWorld](https://arxiv.org/abs/2605.19242) | May 2026 | Video | Physics-faithfulness over 7 event classes / 13 laws |
-| [stable-worldmodel](https://arxiv.org/abs/2605.21800) | Jun 2026 | Platform | Reproducibility + OOD generalization factors |
-| [WMAttack](https://arxiv.org/abs/2605.23220) | May 2026 | RL/embodied | Adversarial robustness via automated attack search |
-| [CRONOS](https://arxiv.org/abs/2605.23699) | May 2026 | Video | Counterfactual physical consistency |
-| [WBench](https://arxiv.org/abs/2605.25874) | May 2026 | Interactive video | 22 sub-metrics, multi-turn, 5 dimensions |
-| [Do LLMs Build World Models From Text? (MentalMap)](https://arxiv.org/abs/2605.28277) | May 2026 | Language | Multilingual spatial reasoning; "L3 cliff" |
-| [WorldLens](https://arxiv.org/abs/2512.10958) | CVPR 2026 (Oral) | Driving | 24 metrics across 5 aspects; perception↔function gap |
-| [DrivingGen](https://arxiv.org/abs/2601.01528) | ICLR 2026 | Driving | 14 models; FVD + Fréchet Trajectory Distance + VLM judge |
-| [WorldBench](https://arxiv.org/abs/2601.21282) | Jan 2026 | Video | Concept-disentangled physics diagnostics (gravity/viscosity/friction) |
-| [PhysicsMind](https://arxiv.org/abs/2601.16007) | Jan 2026 | VLM/video | Center-of-mass / lever / Newton across sim + real |
-| [VisPhyWorld](https://arxiv.org/abs/2602.13294) | Feb 2026 | Video/code | Code-driven reconstruction; physical-parameter MAE |
-| [Physion-Eval](https://arxiv.org/abs/2603.19607) | Mar 2026 | Video | 10,990 human reasoning traces; 22 glitch categories |
-| [PhyScore (LoViF 2026)](https://arxiv.org/abs/2605.05187) | CVPR 2026 (ws) | 4D | Holistic 4D quality + anomaly localization |
-| [iWorld-Bench](https://arxiv.org/abs/2605.03941) | ICML 2026 | Interactive video | 14 models; trajectory + memory-symmetry metrics |
-| [WorldReasonBench](https://arxiv.org/abs/2605.10434) | May 2026 | Video | Video generators as world-state predictors; Reasoning Gap |
-| [PhyGround](https://arxiv.org/abs/2605.10806) | May 2026 | Video | 13 physical laws; PhyJudge-9B; no model >3.3/5 |
-| [WorldArena 2.0](https://arxiv.org/abs/2605.17912) | May 2026 | Embodied | Visuotactile + RL envs + real robots; 22 metrics |
-| [WorldOlympiad](https://arxiv.org/abs/2606.11129) | Jun 2026 | Video | "Triathlon": physical / geometry / interaction tracks |
+A chronological index of 2026 entries; full descriptions and modality live in [Benchmarks by Modality](#benchmarks-by-modality).
+
+| Paper | Date |
+|---|---|
+| [Wow, wo, val!](https://arxiv.org/abs/2601.04137) | Jan 2026 |
+| [A Mechanistic View on Video Generation as World Models](https://arxiv.org/abs/2601.17067) | Jan 2026 |
+| [DrivingGen](https://arxiv.org/abs/2601.01528) | ICLR 2026 (Jan) |
+| [PhysicsMind](https://arxiv.org/abs/2601.16007) | Jan 2026 |
+| [WorldBench](https://arxiv.org/abs/2601.21282) | Jan 2026 |
+| [MIND](https://arxiv.org/abs/2602.08025) | Feb 2026 |
+| [WorldArena](https://arxiv.org/abs/2602.08971) | Feb 2026 |
+| [VisPhyWorld](https://arxiv.org/abs/2602.13294) | Feb 2026 |
+| [The Trinity of Consistency (CoW-Bench)](https://arxiv.org/abs/2602.23152) | Feb 2026 |
+| [Out of Sight, Out of Mind? (STEVO-Bench)](https://arxiv.org/abs/2603.13215) | Mar 2026 |
+| [Physion-Eval](https://arxiv.org/abs/2603.19607) | Mar 2026 |
+| [Omni-WorldBench](https://arxiv.org/abs/2603.22212) | Mar 2026 |
+| [World Reasoning Arena](https://arxiv.org/abs/2603.25887) | Mar 2026 |
+| [RoboWM-Bench](https://arxiv.org/abs/2604.19092) | Apr 2026 |
+| [WorldMark](https://arxiv.org/abs/2604.21686) | Apr 2026 |
+| [iWorld-Bench](https://arxiv.org/abs/2605.03941) | ICML 2026 (May) |
+| [PhyScore (LoViF 2026)](https://arxiv.org/abs/2605.05187) | CVPR 2026 (ws, May) |
+| [WorldReasonBench](https://arxiv.org/abs/2605.10434) | May 2026 |
+| [PhyGround](https://arxiv.org/abs/2605.10806) | May 2026 |
+| [Geometric-Consistency (PDI-Bench)](https://arxiv.org/abs/2605.15185) | May 2026 |
+| [WorldArena 2.0](https://arxiv.org/abs/2605.17912) | May 2026 |
+| [PhyWorld](https://arxiv.org/abs/2605.19242) | May 2026 |
+| [stable-worldmodel](https://arxiv.org/abs/2605.21800) | May 2026 |
+| [WMAttack](https://arxiv.org/abs/2605.23220) | May 2026 |
+| [CRONOS](https://arxiv.org/abs/2605.23699) | May 2026 |
+| [WBench](https://arxiv.org/abs/2605.25874) | May 2026 |
+| [Do LLMs Build World Models From Text? (MentalMap)](https://arxiv.org/abs/2605.28277) | May 2026 |
+| [WorldOlympiad](https://arxiv.org/abs/2606.11129) | Jun 2026 |
+| [WorldLens](https://arxiv.org/abs/2512.10958) | CVPR 2026 (Oral; arXiv Dec 2025) |
 
 ---
 
@@ -103,7 +105,7 @@ Scoring comes in three flavors that strong benchmarks **validate against humans*
 - **Text2World** — "Benchmarking Large Language Models for Symbolic World Model Generation" [![arXiv](https://img.shields.io/badge/arXiv-2502.13092-b31b1b.svg)](https://arxiv.org/abs/2502.13092) — *LLMs synthesize PDDL world models. Metrics: Executability + F1 on predicates/parameters/preconditions/effects.*
 - 🆕 **WMAttack** — "Automated Attack Search for Adversarial Evaluation of World-Model Agents" [![arXiv](https://img.shields.io/badge/arXiv-2605.23220-b31b1b.svg)](https://arxiv.org/abs/2605.23220) — *Adversarial robustness of RL world-model agents. Metrics: Normalized Reward Degradation, Action Instability, combined Utility.*
 - 🆕 **MentalMap** — "Do LLMs Build World Models From Text? A Multilingual Diagnostic of Spatial Reasoning" [![arXiv](https://img.shields.io/badge/arXiv-2605.28277-b31b1b.svg)](https://arxiv.org/abs/2605.28277) — *6-level (L0–L5) spatial-reasoning hierarchy, 8 languages. Finding: universal "L3 reasoning cliff." Metrics: strict/partial composite, counterfactual graph-F1, hallucination decomposition.*
-- **ViSA** — "Probing the Effectiveness of World Models for Spatial Reasoning through Test-time Scaling" [![arXiv](https://img.shields.io/badge/arXiv-2512.05809-b31b1b.svg)](https://arxiv.org/abs/2512.05809) — *Evaluates world-model test-time verifiers (e.g. MindJourney) for VLM spatial reasoning; proposes Verification through Spatial Assertions. Metrics: SAT-Real / MMSI-Bench accuracy, answer-entropy reduction, calibration quality, Evidence-Quality scores, trajectory-selection bias. (MILA · MIT CSAIL · JKU Linz; WM Workshop 2026.)*
+- **ViSA** — "Probing the Effectiveness of World Models for Spatial Reasoning through Test-time Scaling" [![arXiv](https://img.shields.io/badge/arXiv-2512.05809-b31b1b.svg)](https://arxiv.org/abs/2512.05809) — *Evaluates world-model test-time verifiers (e.g. MindJourney) for VLM spatial reasoning; proposes Verification through Spatial Assertions. Metrics: SAT-Real / MMSI-Bench accuracy, answer-entropy reduction, calibration, evidence quality. (WM Workshop 2026.)*
 
 ### Video / Pixel
 
@@ -127,8 +129,8 @@ Scoring comes in three flavors that strong benchmarks **validate against humans*
 - 🆕 **The Trinity of Consistency (CoW-Bench)** — "A Defining Principle for General World Models" [![arXiv](https://img.shields.io/badge/arXiv-2602.23152-b31b1b.svg)](https://arxiv.org/abs/2602.23152) — *Posits Modal × Spatial × Temporal consistency; unified protocol over video and unified multimodal models.*
 - 🆕 **A Mechanistic View on Video Generation as World Models** [![arXiv](https://img.shields.io/badge/arXiv-2601.17067-b31b1b.svg)](https://arxiv.org/abs/2601.17067) — *Survey/position. State Construction vs. Dynamics taxonomy; catalogs 17 metrics (WCS, rFID, Physics-IQ, …) and argues for functional benchmarks.*
 - 🆕 **iWorld-Bench** — "A Benchmark for Interactive World Models with a Unified Action Generation Framework" [![arXiv](https://img.shields.io/badge/arXiv-2605.03941-b31b1b.svg)](https://arxiv.org/abs/2605.03941) — *14 models, 330K clips. Metrics: MUSIQ image quality, brightness/color/sharpness consistency, trajectory accuracy/tolerance (ViPE), memory symmetry. (ICML 2026.)*
-- 🆕 **WorldReasonBench** — "Human-Aligned Stress Testing of Video Generators as Future World-State Predictors" [![arXiv](https://img.shields.io/badge/arXiv-2605.10434-b31b1b.svg)](https://arxiv.org/abs/2605.10434) — *436 QA cases over 4 reasoning dimensions + ~6K expert preference pairs. Metrics: binary QA accuracy, Reasoning Gap, composite ScorePR, human-Elo alignment (Spearman ρ). (Tsinghua · NTU · Waterloo.)*
-- 🆕 **WorldOlympiad** — "Can Your World Model Survive a Triathlon?" [![arXiv](https://img.shields.io/badge/arXiv-2606.11129-b31b1b.svg)](https://arxiv.org/abs/2606.11129) — *Three tracks across gaming/robotics/real video: Physical (segmentation + MLLM judge), Geometry (Gaussian-splatting 3D consistency), Interaction (action-prompt fidelity). (Alibaba DAMO.)*
+- 🆕 **WorldReasonBench** — "Human-Aligned Stress Testing of Video Generators as Future World-State Predictors" [![arXiv](https://img.shields.io/badge/arXiv-2605.10434-b31b1b.svg)](https://arxiv.org/abs/2605.10434) — *436 QA cases over 4 reasoning dimensions + ~6K expert preference pairs. Metrics: binary QA accuracy, Reasoning Gap, composite ScorePR, human-Elo alignment (Spearman ρ).*
+- 🆕 **WorldOlympiad** — "Can Your World Model Survive a Triathlon?" [![arXiv](https://img.shields.io/badge/arXiv-2606.11129-b31b1b.svg)](https://arxiv.org/abs/2606.11129) — *Three tracks across gaming/robotics/real video: Physical (segmentation + MLLM judge), Geometry (Gaussian-splatting 3D consistency), Interaction (action-prompt fidelity).*
 
 ### 3D / 4D
 
@@ -143,7 +145,7 @@ Scoring comes in three flavors that strong benchmarks **validate against humans*
 - **Beyond Simulation** — "Benchmarking World Models for Planning and Causality in Autonomous Driving" [![arXiv](https://img.shields.io/badge/arXiv-2508.01922-b31b1b.svg)](https://arxiv.org/abs/2508.01922) — *Tests whether sim-agent metrics hold when world models are training environments. Metrics: NLL (9 dims), Realism Score, Delta Metametric, Confusion Rate. (ICRA 2025.)*
 - **SimWorld** — "A Unified Benchmark for Simulator-Conditioned Scene Generation via World Model" [![arXiv](https://img.shields.io/badge/arXiv-2503.13952-b31b1b.svg)](https://arxiv.org/abs/2503.13952) [![Code](https://img.shields.io/badge/Code-GitHub-green)](https://github.com/Li-Zn-H/SimWorld) — *Generative quality + downstream utility. Metrics: FID, Pixel Diversity, detection mAP, segmentation mIoU.*
 - 🆕 **WorldLens** — "Full-Spectrum Evaluations of Driving World Models in Real World" [![arXiv](https://img.shields.io/badge/arXiv-2512.10958-b31b1b.svg)](https://arxiv.org/abs/2512.10958) [![Website](https://img.shields.io/badge/Website-Link-blue)](https://worldbench.github.io/worldlens) — *24 metrics across Generation / Reconstruction / Action-Following / Downstream / Human; visual realism vs. physics is a fundamental trade-off. (CVPR 2026, Oral.)*
-- 🆕 **DrivingGen** — "A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving" [![arXiv](https://img.shields.io/badge/arXiv-2601.01528-b31b1b.svg)](https://arxiv.org/abs/2601.01528) — *14 models. Metrics: FVD, Fréchet Trajectory Distance, CLIP-IQA+, trajectory comfort/curvature, agent-appearance consistency (YOLOv10+SAM2), Cosmos-Reason1 VLM judge. (ICLR 2026, U Toronto · CUHK.)*
+- 🆕 **DrivingGen** — "A Comprehensive Benchmark for Generative Video World Models in Autonomous Driving" [![arXiv](https://img.shields.io/badge/arXiv-2601.01528-b31b1b.svg)](https://arxiv.org/abs/2601.01528) — *14 models. Metrics: FVD, Fréchet Trajectory Distance, CLIP-IQA+, trajectory comfort/curvature, agent-appearance consistency (YOLOv10+SAM2), Cosmos-Reason1 VLM judge. (ICLR 2026.)*
 
 ### Embodied & Policy Evaluation
 
@@ -153,7 +155,7 @@ Scoring comes in three flavors that strong benchmarks **validate against humans*
 - 🆕 **Wow, wo, val!** — "A Comprehensive Embodied World Model Evaluation Turing Test" [![arXiv](https://img.shields.io/badge/arXiv-2601.04137-b31b1b.svg)](https://arxiv.org/abs/2601.04137) — *609 manipulation scenarios; 22 metrics + real-robot Inverse-Dynamics "Turing test." Human corr. >0.93.*
 - 🆕 **WorldArena** — "A Unified Benchmark for Evaluating Perception and Functional Utility of Embodied World Models" [![arXiv](https://img.shields.io/badge/arXiv-2602.08971-b31b1b.svg)](https://arxiv.org/abs/2602.08971) — *16 perception + 3 functional metrics (data-engine / policy-evaluator / action-planner). EWMScore (r=0.825 to humans). Strong perception-functionality gap.*
 - 🆕 **RoboWM-Bench** — "A Benchmark for Evaluating World Models in Robotic Manipulation" [![arXiv](https://img.shields.io/badge/arXiv-2604.19092-b31b1b.svg)](https://arxiv.org/abs/2604.19092) — *Converts generated videos into executable actions validated in simulation. Metrics: task/step-level executability, real-to-sim consistency.*
-- 🆕 **WorldArena 2.0** — "Extending Embodied World Model Benchmarking on Modality, Functionality and Platform" [![arXiv](https://img.shields.io/badge/arXiv-2605.17912-b31b1b.svg)](https://arxiv.org/abs/2605.17912) — *Extends [WorldArena](#-2026-papers-at-a-glance) to visuotactile perception, interactive-RL environments, and real robots; 22 metrics incl. tactile PSNR/SSIM, JEPA similarity, closed-loop task/policy success. (Tsinghua · Stanford · Princeton.)*
+- 🆕 **WorldArena 2.0** — "Extending Embodied World Model Benchmarking on Modality, Functionality and Platform" [![arXiv](https://img.shields.io/badge/arXiv-2605.17912-b31b1b.svg)](https://arxiv.org/abs/2605.17912) — *Extends [WorldArena](#embodied--policy-evaluation) to visuotactile perception, interactive-RL environments, and real robots; 22 metrics incl. tactile PSNR/SSIM, JEPA similarity, closed-loop task/policy success.*
 - *See also [EWMBench](#video--pixel) (embodied scene/motion/semantic).*
 
 ### Physics-Centric
@@ -163,11 +165,15 @@ Scoring comes in three flavors that strong benchmarks **validate against humans*
 - **PhyWorldBench** — "A Comprehensive Evaluation of Physical Realism in Text-to-Video Models" [![arXiv](https://img.shields.io/badge/arXiv-2507.13428-b31b1b.svg)](https://arxiv.org/abs/2507.13428) — *12 models / 1,050 prompts with an Anti-Physics category. Metrics: Semantic Adherence, Physical Commonsense, Context-Aware-Prompt (ROC-AUC). (ICLR 2026, Oral.)*
 - **ScenePhys** — "Controllable Physics Videos for World-Model Evaluation" [![Workshop](https://img.shields.io/badge/NeurIPS_2025-EWM-purple)](https://neurips.cc/virtual/2025/loc/san-diego/123993) — *382 PhET-simulation clips, 1,146 expert Q/A. Metrics: deterministic numerical grading + rubricized dual-judge LLM scoring.*
 - **Newton** — "A Small Benchmark for Interactive Foundation World Models" [![OpenReview](https://img.shields.io/badge/OpenReview-ICLR'25_WM-8c1b13)](https://openreview.net/forum?id=xlp6P6qaRW) — *Newton-OP (object permanence) + Newton-Physics (rigid-body interaction). Metrics: Object Permanence, Action Following, Physical Accuracy.*
-- 🆕 **Physion-Eval** — "Evaluating Physical Realism in Generated Video via Human Reasoning" [![arXiv](https://img.shields.io/badge/arXiv-2603.19607-b31b1b.svg)](https://arxiv.org/abs/2603.19607) — *10,990 expert reasoning traces over 5 generators (ego + exo views, each paired with a real reference). Metrics: temporal localization of glitches, 22 fine-grained failure categories, NL explanations; 83–94% of generated videos show ≥1 physical glitch. (Stanford · Harvard.)*
-- 🆕 **PhyGround** — "Benchmarking Physical Reasoning in Generative World Models" [![arXiv](https://img.shields.io/badge/arXiv-2605.10806-b31b1b.svg)](https://arxiv.org/abs/2605.10806) — *250 prompts / 13 physical laws (mechanics, fluids, optics); 459 annotators + PhyJudge-9B judge. Metrics: per-law Likert physics scores, semantic alignment, temporal validity, persistence; no model >3.3/5. (CMU · Northeastern · UW.)*
-- 🆕 **VisPhyWorld** — "Probing Physical Reasoning via Code-Driven Video Reconstruction" [![arXiv](https://img.shields.io/badge/arXiv-2602.13294-b31b1b.svg)](https://arxiv.org/abs/2602.13294) — *Execution-based: MLLMs generate Python simulator code from video (VisPhyBench, 209 scenes / 108 templates). Metrics: reconstruction PSNR/SSIM/LPIPS + Physical-Parameter MAE (gravity/restitution/friction); gravity recovery ≈ 0 for all models. (Waterloo · Autodesk.)*
-- 🆕 **WorldBench** — "Disambiguating Physics for Diagnostic Evaluation of World Models" [![arXiv](https://img.shields.io/badge/arXiv-2601.21282-b31b1b.svg)](https://arxiv.org/abs/2601.21282) — *Concept-disentangled physics diagnostics. Metrics: foreground mIoU (SAM2), background RMSE, automatic gravity/viscosity/friction parameter estimation. (UCLA · Sony AI · Yale · ARL.)*
-- 🆕 **PhysicsMind** — "Sim and Real Mechanics Benchmarking for Physical Reasoning and Prediction in Foundational VLMs and World Models" [![arXiv](https://img.shields.io/badge/arXiv-2601.16007-b31b1b.svg)](https://arxiv.org/abs/2601.16007) — *22 VLMs + 7 video/world models on Center-of-Mass, Lever Equilibrium, Newton's First Law (sim + real). Metrics: VQA accuracy, mask IoU/centroid, trajectory RMSE, speed/accel similarity. (Peking · MBZUAI · NUS · UNC · Cornell.)*
+- **Morpheus** — "Benchmarking Physical Reasoning of Video Generative Models with Real Physical Experiments" [![arXiv](https://img.shields.io/badge/arXiv-2504.02918-b31b1b.svg)](https://arxiv.org/abs/2504.02918) — *80 real-world videos of phenomena governed by conservation laws; fits the system's ODE and extracts physical measurements (velocity, acceleration). Metrics: conformance of generated dynamics to physical invariants (momentum/energy).*
+- **Physics-IQ** — "Do generative video models understand physical principles?" [![arXiv](https://img.shields.io/badge/arXiv-2501.09038-b31b1b.svg)](https://arxiv.org/abs/2501.09038) — *Real test set spanning solid mechanics, fluids, optics, thermodynamics, magnetism; models predict the continuation of a physical event. Metric: composite Physics-IQ score (Spatial IoU, Spatiotemporal IoU, location + MSE) vs. real footage. Finding: physical understanding is largely uncorrelated with visual realism.*
+- **PhysBench** — "Benchmarking and Enhancing Vision-Language Models for Physical World Understanding" [![arXiv](https://img.shields.io/badge/arXiv-2501.16411-b31b1b.svg)](https://arxiv.org/abs/2501.16411) — *10,002 interleaved video-image-text entries across 4 physical-understanding domains; also proposes the PhysAgent framework. Metric: VQA accuracy. (ICLR 2025.)*
+- **PhyGenBench** — "Towards World Simulator: Crafting Physical Commonsense-Based Benchmark for Video Generation" [![arXiv](https://img.shields.io/badge/arXiv-2410.05363-b31b1b.svg)](https://arxiv.org/abs/2410.05363) — *160 prompts across 27 physical laws / 4 domains for text-to-video. Introduces PhyGenEval, a hierarchical VLM+LLM judge of physical commonsense.*
+- 🆕 **Physion-Eval** — "Evaluating Physical Realism in Generated Video via Human Reasoning" [![arXiv](https://img.shields.io/badge/arXiv-2603.19607-b31b1b.svg)](https://arxiv.org/abs/2603.19607) — *10,990 expert reasoning traces over 5 generators (ego + exo views, each paired with a real reference). Metrics: temporal localization of glitches, 22 fine-grained failure categories, NL explanations; 83–94% of generated videos show ≥1 physical glitch.*
+- 🆕 **PhyGround** — "Benchmarking Physical Reasoning in Generative World Models" [![arXiv](https://img.shields.io/badge/arXiv-2605.10806-b31b1b.svg)](https://arxiv.org/abs/2605.10806) — *250 prompts / 13 physical laws (mechanics, fluids, optics); 459 annotators + PhyJudge-9B judge. Metrics: per-law Likert physics scores, semantic alignment, temporal validity, persistence; no model >3.3/5.*
+- 🆕 **VisPhyWorld** — "Probing Physical Reasoning via Code-Driven Video Reconstruction" [![arXiv](https://img.shields.io/badge/arXiv-2602.13294-b31b1b.svg)](https://arxiv.org/abs/2602.13294) — *Execution-based: MLLMs generate Python simulator code from video (VisPhyBench, 209 scenes / 108 templates). Metrics: reconstruction PSNR/SSIM/LPIPS + Physical-Parameter MAE (gravity/restitution/friction); gravity recovery ≈ 0 for all models.*
+- 🆕 **WorldBench** — "Disambiguating Physics for Diagnostic Evaluation of World Models" [![arXiv](https://img.shields.io/badge/arXiv-2601.21282-b31b1b.svg)](https://arxiv.org/abs/2601.21282) — *Concept-disentangled physics diagnostics. Metrics: foreground mIoU (SAM2), background RMSE, automatic gravity/viscosity/friction parameter estimation.*
+- 🆕 **PhysicsMind** — "Sim and Real Mechanics Benchmarking for Physical Reasoning and Prediction in Foundational VLMs and World Models" [![arXiv](https://img.shields.io/badge/arXiv-2601.16007-b31b1b.svg)](https://arxiv.org/abs/2601.16007) — *22 VLMs + 7 video/world models on Center-of-Mass, Lever Equilibrium, Newton's First Law (sim + real). Metrics: VQA accuracy, mask IoU/centroid, trajectory RMSE, speed/accel similarity.*
 
 ### Other / Workshop
 
@@ -178,16 +184,26 @@ Scoring comes in three flavors that strong benchmarks **validate against humans*
 
 ## Metric Reference Tables
 
-### Most common automatic metrics
+### Common metrics
 
-| Metric | Measures | Used by (examples) |
-|---|---|---|
-| **FVD** (Fréchet Video Distance) | Clip-level distributional realism | EVA, LoopNav, OmniWorld, Mechanistic View |
-| **LPIPS / SSIM / PSNR** | Perceptual / structural frame similarity | World Stability, WorldGym, MIND |
-| **DINO / CLIP consistency** | Subject & background temporal stability | EWMBench, CRONOS, WorldArena, WBench |
-| **Camera-pose error (ATE / RPE)** | Action/camera controllability | OmniWorld, MIND, WorldMark, WBench |
-| **VBench dimensions** | Multi-axis perceptual quality | WorldModelBench, PhyWorld, Omni-WorldBench |
-| **Reprojection / geometric residuals** | 3D structural coherence | PDI-Bench, WorldScore, WBench, WorldLens |
+General-purpose metrics reused across the benchmarks above, each with the paper that originally **defined** it and example users from this list.
+
+| Metric | Measures | Defining paper | Used by (examples) |
+|---|---|---|---|
+| **FID** — Fréchet Inception Distance | Image-set distributional realism | [![arXiv](https://img.shields.io/badge/arXiv-1706.08500-b31b1b.svg)](https://arxiv.org/abs/1706.08500) | perceptual baseline; SimWorld, WorldEval |
+| **IS** — Inception Score | Sample quality & diversity | [![arXiv](https://img.shields.io/badge/arXiv-1606.03498-b31b1b.svg)](https://arxiv.org/abs/1606.03498) | perceptual baseline |
+| **FVD** — Fréchet Video Distance | Clip-level distributional realism | [![arXiv](https://img.shields.io/badge/arXiv-1812.01717-b31b1b.svg)](https://arxiv.org/abs/1812.01717) | EVA, LoopNav, OmniWorld, DrivingGen |
+| **FVMD** — Fréchet Video Motion Distance | Motion / temporal consistency | [![arXiv](https://img.shields.io/badge/arXiv-2407.16124-b31b1b.svg)](https://arxiv.org/abs/2407.16124) | motion-consistency evaluation |
+| **LPIPS** — Learned Perceptual Image Patch Similarity | Perceptual frame similarity | [![arXiv](https://img.shields.io/badge/arXiv-1801.03924-b31b1b.svg)](https://arxiv.org/abs/1801.03924) | World Stability, WorldGym, MIND |
+| **SSIM** — Structural Similarity | Structural frame similarity | [![DOI](https://img.shields.io/badge/DOI-10.1109%2FTIP.2003.819861-blue.svg)](https://doi.org/10.1109/TIP.2003.819861) | WorldGym, LoopNav, MIND |
+| **PSNR** — Peak Signal-to-Noise Ratio | Pixel-level fidelity | Classical (no canonical paper) | WorldGym, WorldArena 2.0 |
+| **CLIP** — CLIP-based similarity | Image–text / feature alignment | [![arXiv](https://img.shields.io/badge/arXiv-2103.00020-b31b1b.svg)](https://arxiv.org/abs/2103.00020) | CLIP-consistency: EWMBench, CRONOS |
+| **CLIPScore** | Reference-free text–image alignment | [![arXiv](https://img.shields.io/badge/arXiv-2104.08718-b31b1b.svg)](https://arxiv.org/abs/2104.08718) | caption / prompt alignment |
+| **DINO / DINOv2 consistency** | Subject & background temporal stability | [![arXiv](https://img.shields.io/badge/arXiv-2304.07193-b31b1b.svg)](https://arxiv.org/abs/2304.07193) | EWMBench, CRONOS, WorldArena, WBench |
+| **VBench** | Multi-axis perceptual quality | [![arXiv](https://img.shields.io/badge/arXiv-2311.17982-b31b1b.svg)](https://arxiv.org/abs/2311.17982) | WorldModelBench, PhyWorld, Omni-WorldBench |
+| **VBench++** | Extended T2V / I2V perceptual quality | [![arXiv](https://img.shields.io/badge/arXiv-2411.13503-b31b1b.svg)](https://arxiv.org/abs/2411.13503) | perceptual-quality suite |
+| **Camera-pose error (ATE / RPE)** | Action / camera controllability | SLAM-based (no single paper) | OmniWorld, MIND, WorldMark, WBench |
+| **Reprojection / geometric residuals** | 3D structural coherence | Geometry-based (no single paper) | PDI-Bench, WorldScore, WBench, WorldLens |
 
 ### VLM-as-judge & human-validated metrics
 
@@ -195,7 +211,7 @@ Scoring comes in three flavors that strong benchmarks **validate against humans*
 |---|---|---|
 | Fine-tuned VLM judge | Physics-faithfulness, physical-rule scores | WorldModelBench, VideoPhy-2, PhyWorld, WBench |
 | Frontier-VLM verifier | State-progress / plausibility / coherence | STEVO-Bench (Gemini-3.1-Pro), CRONOS, WorldArena |
-| Human study (validated) | Spearman/Pearson alignment | WBench (≥0.94), Wow-wo-val (>0.93), WorldMark (>0.9), WorldArena (0.825) |
+| Human study (validated) | Spearman/Pearson alignment | WBench (≥0.94), Wow, wo, val! (>0.93), WorldMark (>0.9), WorldArena (0.825) |
 
 ### Functional / closed-loop metrics
 
